@@ -1,3 +1,6 @@
+import math
+from statistics import stdev
+
 import numpy as np
 from scipy.stats import ttest_1samp, norm, ttest_ind
 
@@ -35,6 +38,20 @@ def one_sample_tests(_files: list, _mean: float, _alpha: float, _less_than: bool
     reject_null_hypothesis = []
 
     # YOUR CODE HERE #
+    for f in _files:                                    # for every file in the list,
+        active = np.loadtxt(f, delimiter=",")           # load the file as a numpy array
+        act_mean = np.mean(active)                      # take the mean of the active array
+        act_stdv = stdev(active)                        # take the stdev of the active array
+        act_num = len(active)                           # take the number of entries of the active array
+        t = (act_mean - _mean) / (act_stdv / (math.sqrt(act_num))) # find the value of t
+        if _less_than is True:                          # if we are doing a left sided test,
+            if t < _alpha:                              # and t is less than alpha,
+                reject_null_hypothesis.append(f)        # add the file to the rejected list
+                print("Rejected: Mean of ",f," is statistically different (left test)")
+        if _less_than is False:                         # if we are doing a right sided test,
+            if t > _alpha:                              # and t is greater than alpha,
+                reject_null_hypothesis.append(f)        # add the file to the rejected list
+                print("Rejected: Mean of ",f," is statistically different (right test)")
 
     # return samples that were rejected
     return reject_null_hypothesis
