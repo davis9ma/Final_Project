@@ -23,15 +23,21 @@ Step 2: Determine how much data to use...
 """
 # If you wish to only run on ~10s of data uncomment the line below
 # if you wish to run on all data, comment out this line
-signal = signal[0:3300]
+#signal = signal[0:3300]
 
+#apply filtering method
+signal=np.diff(signal)
+signal=np.square(signal)
+window_size=10
+ones=(np.ones(window_size) / window_size)
+signal=np.convolve(signal,ones)
 
 """
 Step 3: Use Find Peaks
 """
 
 # you may want to explore various parameters for the function that will help you!
-peaks, _ = find_peaks(signal)
+peaks, _ = find_peaks(signal, height=0.5, distance=300, width=10)
 print("Within the sample we found ", len(peaks), " heart beats with find_peaks!")
 
 """
