@@ -8,7 +8,7 @@ from matplotlib import matplotlib_fname
 path = "C:\\Users\\Macon Davis\\Documents\\GitHub\\engr340-fall2024\\data\\ekg\\mitdb_100.csv"
 
 # load data in matrix from CSV file; skip first two rows
-matrix = np.loadtxt(path,delimiter=",",skiprows=2)
+matrix = np.loadtxt(path,delimiter=",",skiprows=2, )
 
 
 # save each vector as own variable
